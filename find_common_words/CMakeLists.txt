@@ -1,13 +1,9 @@
-﻿# CMakeList.txt: проект CMake для CPP_practice; включите исходный код и определения,
+﻿# CMakeList.txt: проект CMake для cpp_practice1(3); включите исходный код и определения,
 # укажите здесь логику для конкретного проекта.
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("CPP_practice")
-
 # Добавьте источник в исполняемый файл этого проекта.
-add_subdirectory(merge_sorting)
-add_subdirectory(unordered_set_practice)
-add_subdirectory(find_common_words)
+add_executable (find_common_words "find_common_words.cpp" "find_common_words.h")
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
