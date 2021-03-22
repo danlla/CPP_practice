@@ -1,12 +1,9 @@
-﻿# CMakeList.txt: проект CMake для CPP_practice; включите исходный код и определения,
+﻿# CMakeList.txt: проект CMake для cpp_practice1(2); включите исходный код и определения,
 # укажите здесь логику для конкретного проекта.
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("CPP_practice")
-
 # Добавьте источник в исполняемый файл этого проекта.
-add_subdirectory(merge_sorting)
-add_subdirectory(unordered_set_practice)
+add_executable (unordered_set_practice "unordered_set_practice.cpp" "unordered_set_practice.h")
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
