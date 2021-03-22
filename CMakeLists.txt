@@ -11,5 +11,6 @@ add_subdirectory(unordered_set_practice)
 add_subdirectory(find_common_words)
 add_subdirectory(avl_tree)
 add_subdirectory(graphs)
+add_subdirectory(median_filter)
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
