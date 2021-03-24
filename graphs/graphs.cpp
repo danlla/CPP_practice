@@ -39,5 +39,5 @@ int main(void)
 		std::cout <<" src "<<(*it).src<<" dst "<<(*it).dst<<" edge "<< (*it).edge << std::endl;
 	}
 
-	//g.bfs_print(*g.begin());
+	//bfs_print(g,'A');
 }

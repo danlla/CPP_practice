@@ -161,7 +161,7 @@ public:
 			dfs_print(it->dst, visited);
 	}
 
-	void bfs_print(TVertex ver)
+	/*void bfs_print(TVertex ver)
 	{
 		std::queue<TVertex> q;
 		std::unordered_set<TVertex> visited;
@@ -178,8 +178,32 @@ public:
 					q.push(it->dst);
 			}
 		}
-	}
+	}*/
 };
+
+//template
+//<
+//	typename TVertex,
+//	typename TEdge
+//>
+//void bfs_print(graph<TVertex, TEdge>& g,TVertex ver)
+//{
+//	std::queue<TVertex> q;
+//	std::unordered_set<TVertex> visited;
+//	q.push(ver);
+//	while (q.size())
+//	{
+//		auto tmp = q.front();
+//		visited.insert(tmp);
+//		std::cout << tmp;
+//		q.pop();
+//		for (auto it = g.begin_adjacent_link(ver); it != g.end_adjacent_link(ver); ++it)
+//		{
+//			if (visited.find(it->dst) == visited.end())
+//				q.push(it->dst);
+//		}
+//	}
+//}
 
 struct dijkstra_comparator
 {

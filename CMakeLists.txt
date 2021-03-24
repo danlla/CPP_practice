@@ -12,5 +12,6 @@ add_subdirectory(find_common_words)
 add_subdirectory(avl_tree)
 add_subdirectory(graphs)
 add_subdirectory(median_filter)
+add_subdirectory(brut_force)
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
