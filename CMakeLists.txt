@@ -13,5 +13,6 @@ add_subdirectory(avl_tree)
 add_subdirectory(graphs)
 add_subdirectory(median_filter)
 add_subdirectory(brut_force)
+add_subdirectory(collection)
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
