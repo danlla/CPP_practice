@@ -5,6 +5,9 @@
 
 std::vector<int> simple_median_filter(const std::vector<int> src, size_t w = 3)
 {
+	if (w > src.size())
+		w = src.size();
+
 	std::vector<int> dst;
 	std::vector<int> window(w);
 
@@ -49,20 +52,42 @@ std::vector<int> simple_median_filter(const std::vector<int> src, size_t w = 3)
 
 std::vector<int> median_filter(const std::vector<int> src, size_t w = 3)
 {
+	if (w > src.size())
+		w = src.size();
+
 	std::vector<int> dst;
 	std::multiset<int> window;
 
+	for (auto i = 0; i < w ; ++i)
+		window.insert(src[i]);
 	auto mid = window.begin();
+	for (size_t i = 0; i < w / 2; ++i)
+		++mid;
+	dst.push_back(*mid);
 
-	for (size_t i = w / 2; i <= src.size() - (w + 1) / 2; ++i)
+	for (size_t i = w / 2 + 1; i <= src.size() - (w + 1) / 2; ++i)
 	{
-		for (auto j = i - w / 2; j < i + (w + 1) / 2; ++j)
-			window.insert(src[j]);
-		mid = window.begin();
-		for (size_t j = 0; j < w / 2; ++j)
+		auto tmp = window.find(src[i - w / 2 - 1]);
+		bool equal_mid = false;
+		if (*mid == *tmp)
+		{
+			++mid;
+			equal_mid = true;
+		}
+		bool bigger_th_mid = false;
+		if (*tmp > *mid)
+			bigger_th_mid = true;
+
+		//auto tmp = window.find(src[i - w / 2 - 1]);
+		/*if (mid == tmp)
+			++mid;*/
+		window.erase(tmp);
+		window.insert(src[i + (w+1) / 2 - 1]);
+		if (src[i + (w + 1) / 2 - 1] < *mid && bigger_th_mid||equal_mid)
+			--mid;
+		if (src[i + (w + 1) / 2 - 1] > *mid && !bigger_th_mid)
 			++mid;
 		dst.push_back(*mid);
-		window.clear();
 	}
 	return dst;
 }
@@ -70,16 +95,16 @@ std::vector<int> median_filter(const std::vector<int> src, size_t w = 3)
 
 void main(void)
 {
-	std::vector<int> v = { 2,2,56,3,4,2,4,5,10000,2,4,56,1,2,34,5,2,123,5,12,23,4,1,2 };
-	std::vector<int> mfv1 = simple_median_filter(v,4);
-	//std::vector<int> mfv2 = median_filter(v, 3);
+	std::vector<int> v = { 2,2,56,3,4,2,4,5,123,14,1,2,3,4,1231,2,4,12,4 };
+	std::vector<int> mfv1 = simple_median_filter(v,3);
+	std::vector<int> mfv2 = median_filter(v, 3);
 	for (auto& i : mfv1)
 	{
 		std::cout << i << " ";
 	}
-	/*std::cout << std::endl;
+	std::cout << std::endl;
 	for (auto& i : mfv2)
 	{
 		std::cout << i << " ";
-	}*/
+	}
 }
