@@ -4,6 +4,7 @@
 #include <limits>
 #include <stdexcept>
 #include <queue>
+#include <stack>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -145,65 +146,84 @@ public:
 		return LinkIterator(_edges.end(), _edges.end());
 	}
 
-	void dfs_print(TVertex ver)
-	{
-		std::unordered_set<TVertex> visited;
-		dfs_print(ver, visited);
-	}
-
-	void dfs_print(TVertex ver, std::unordered_set<TVertex>& visited)
-	{
-		if (visited.find(ver) != visited.end())
-			return;
-		std::cout << ver;
-		visited.insert(ver);
-		for (auto it = _edges[ver].begin(); it != _edges[ver].end(); ++it)
-			dfs_print(it->dst, visited);
-	}
-
-	/*void bfs_print(TVertex ver)
-	{
-		std::queue<TVertex> q;
-		std::unordered_set<TVertex> visited;
-		q.push(ver);
-		while (q.size())
-		{
-			auto tmp = q.front();
-			visited.insert(tmp);
-			std::cout << tmp;
-			q.pop();
-			for (auto it = _edges[tmp].begin(); it != _edges[tmp].end(); ++it)
-			{
-				if (visited.find(it->dst) == visited.end())
-					q.push(it->dst);
-			}
-		}
-	}*/
 };
 
-//template
-//<
-//	typename TVertex,
-//	typename TEdge
-//>
-//void bfs_print(graph<TVertex, TEdge>& g,TVertex ver)
-//{
-//	std::queue<TVertex> q;
-//	std::unordered_set<TVertex> visited;
-//	q.push(ver);
-//	while (q.size())
-//	{
-//		auto tmp = q.front();
-//		visited.insert(tmp);
-//		std::cout << tmp;
-//		q.pop();
-//		for (auto it = g.begin_adjacent_link(ver); it != g.end_adjacent_link(ver); ++it)
-//		{
-//			if (visited.find(it->dst) == visited.end())
-//				q.push(it->dst);
-//		}
-//	}
-//}
+template
+<
+	typename TVertex,
+	typename TEdge
+>
+void recur_for_dfs(graph<TVertex, TEdge>& g, TVertex ver, std::unordered_set<TVertex>& visited)
+{
+	if (visited.find(ver) != visited.end())
+		return;
+	std::cout << ver;
+	visited.insert(ver);
+	for (auto it = g.begin_adjacent_link(ver); it != g.end_adjacent_link(ver); ++it)
+		recur_for_dfs(g,it->dst, visited);
+}
+
+template
+<
+	typename TVertex,
+	typename TEdge
+>
+void dfs_recur_print(graph<TVertex, TEdge>& g, TVertex ver)
+{
+	std::unordered_set<TVertex> visited;
+	recur_for_dfs(g, ver, visited);
+}
+
+template
+<
+	typename TVertex,
+	typename TEdge
+>
+void bfs_print(graph<TVertex, TEdge>& g,TVertex ver)
+{
+	std::queue<TVertex> q;
+	std::unordered_set<TVertex> visited;
+	q.push(ver);
+	while (q.size())
+	{
+		auto tmp = q.front();
+		visited.insert(tmp);
+		std::cout << *tmp << std::endl;
+		q.pop();
+		for (auto it = g.begin_adjacent_link(tmp); it != g.end_adjacent_link(tmp); ++it)
+		{
+			if (visited.find(it->dst) == visited.end())
+				q.push(it->dst);
+		}
+	}
+}
+
+template
+<
+	typename TVertex,
+	typename TEdge
+>
+void dfs_print(graph<TVertex, TEdge>& g, TVertex ver)
+{
+	std::stack<TVertex> q;
+	std::unordered_set<TVertex> visited;
+	q.push(ver);
+	while (q.size())
+	{
+		auto tmp = q.top();
+		visited.insert(tmp);
+		std::cout << tmp;
+		q.pop();
+		for (auto it = g.begin_adjacent_link(tmp); it != g.end_adjacent_link(tmp); ++it)
+		{
+			if (visited.find(it->dst) == visited.end())
+			{
+				q.push(it->dst);
+				visited.insert(it->dst);
+			}
+		}
+	}
+}
 
 struct dijkstra_comparator
 {

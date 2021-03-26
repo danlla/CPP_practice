@@ -40,4 +40,8 @@ int main(void)
 	}
 
 	//bfs_print(g,'A');
+	std::cout << std::endl;
+	dfs_print(g, 'A');
+	std::cout << std::endl;
+	dfs_recur_print(g, 'A');
 }

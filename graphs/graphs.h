@@ -5,5 +5,6 @@
 
 #include <iostream>
 #include "graph.h"
+#include "metro.h"
 
 // TODO: установите здесь ссылки на дополнительные заголовки, требующиеся для программы.
