@@ -4,6 +4,7 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (graphs "graphs.cpp" "graphs.h")
+add_executable (graphs "graphs.cpp" "graphs.h" )
+add_executable (metro "metro.cpp" "graphs.h" "metro.h")
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
