@@ -22,7 +22,10 @@ public:
 	virtual iterator& erase(iterator& pos) = 0;
 	virtual void clear() = 0;
 	virtual size_t size() = 0;
-	virtual bool empty() = 0;
+	bool empty()
+	{
+		return size() == 0;
+	}
 	virtual std::unique_ptr<iterator> begin() = 0;
 	virtual std::unique_ptr<iterator> end() = 0;
 	virtual ~collection() = default;
@@ -95,10 +98,6 @@ public:
 		return v.size();
 	}
 
-	bool empty()
-	{
-		return v.empty();
-	}
 
 	std::unique_ptr<iterator> begin()
 	{
@@ -177,11 +176,6 @@ public:
 	size_t size()
 	{
 		return l.size();
-	}
-
-	bool empty()
-	{
-		return l.empty();
 	}
 
 	std::unique_ptr<iterator> begin()
