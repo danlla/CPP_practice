@@ -225,12 +225,12 @@ void dfs_print(graph<TVertex, TEdge>& g, TVertex ver)
 	}
 }
 
-struct dijkstra_comparator
+struct dijkstra_comparator_char
 {
 	std::unordered_map<char, double>& d;
 	const std::unordered_set<char>& used;
 
-	dijkstra_comparator(std::unordered_map<char, double>& d, const std::unordered_set<char>& used)
+	dijkstra_comparator_char(std::unordered_map<char, double>& d, const std::unordered_set<char>& used)
 		: d(d), used(used) { }
 
 	bool operator()(char src, char dst)
@@ -254,7 +254,7 @@ struct dijkstra_comparator
 	}
 };
 
-double dijkstra(graph<char, double>& g, char src, char dst)
+std::vector<char> dijkstra(graph<char, double>& g, char src, char dst)
 {
 	// TODO src, dst включены в граф?
 
@@ -274,7 +274,7 @@ double dijkstra(graph<char, double>& g, char src, char dst)
 			d[v] = 0;
 	}
 
-	dijkstra_comparator comparator(d, used);
+	dijkstra_comparator_char comparator(d, used);
 	const auto n = g.size();
 	for (size_t i = 0; i < n; ++i)
 	{
@@ -305,5 +305,16 @@ double dijkstra(graph<char, double>& g, char src, char dst)
 		}
 	}
 
-	return d[dst];
+	std::vector<char> result;
+	auto tmp = p[dst];
+	result.push_back(tmp);
+	while (tmp != src)
+	{
+		tmp = p[tmp];
+		result.push_back(tmp);
+	}
+
+	return result;
 }
+
+

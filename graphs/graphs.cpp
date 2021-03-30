@@ -1,4 +1,6 @@
-﻿#include "graphs.h"
+﻿#include "graph.h"
+#include <iostream>
+
 
 
 int main(void)
@@ -31,7 +33,7 @@ int main(void)
 		}
 	}
 
-	printf("%f", dijkstra(g, 'A', 'E'));
+	//printf("%f", dijkstra(g, 'A', 'E'));
 
 	std::cout << "\n\n\n\n\n";
 	for (auto it = g.begin_link(); it != g.end_link(); ++it)
@@ -39,9 +41,16 @@ int main(void)
 		std::cout <<" src "<<(*it).src<<" dst "<<(*it).dst<<" edge "<< (*it).edge << std::endl;
 	}
 
-	//bfs_print(g,'A');
 	std::cout << std::endl;
+	//auto way = dijkstra(g, 'A', 'E');
+
+	/*for (auto i : way)
+		std::cout << i << "->";*/
+
+	//bfs_print(g,'A');
+	/*std::cout << std::endl;
 	dfs_print(g, 'A');
 	std::cout << std::endl;
-	dfs_recur_print(g, 'A');
+	dfs_recur_print(g, 'A');*/
+
 }

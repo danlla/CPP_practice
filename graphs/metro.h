@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <exception>
+#include <memory>
 
 enum class link_type : bool
 {
@@ -60,16 +61,43 @@ std::ostream& operator<<(std::ostream& os, link_type& st)
 	return os;
 }
 
-struct route
+//struct route
+//{
+//	link_type lt;
+//	unsigned short time_transit;
+//};
+
+class route //public route
 {
+public:
 	unsigned short index_src;
 	unsigned short index_dst;
 	link_type lt;
 	unsigned short time_transit;
+
+
+
+	const static unsigned short TIME_MAX = 30000;
+	static unsigned short max_time()
+	{
+		return TIME_MAX;
+	}
+
+	bool operator<(route& obj)
+	{
+		return time_transit < obj.time_transit;
+	}
+
+	bool operator==(const unsigned short obj) const
+	{
+		return time_transit == obj;
+	}
+
 };
 
-struct station
+class station
 {
+public:
 	unsigned short index;
 	std::string line_name;
 	std::string station_name;
@@ -85,42 +113,44 @@ std::ostream& operator<<(std::ostream& os, station& st)
 	return os;
 }
 
-std::vector<station> load_stations_from_file(char* path_stations)
+std::vector<std::shared_ptr<station>> load_stations_from_file(char* path_stations)
 {
-	std::vector<station> stations;
+	std::vector<std::shared_ptr<station>> stations;
 	std::ifstream f(std::string(path_stations), std::ios_base::in);
 	if (!f)
 		throw std::ios_base::failure(std::string("File didn't open"));
-	station tmp;
-	while (f >> tmp.index)
+	unsigned short index;
+	while (f >> index)
 	{
-		//f >> tmp.index;
+		auto st = std::make_shared<station>();
+		st->index = index;
 		std::getline(f, std::string(), '\t');
-		std::getline(f, tmp.line_name, '\t');
-		std::getline(f, tmp.station_name, '\t');
-		f >> tmp.st;
-		f >> tmp.delay;
-		f >> tmp.latitude;
-		f >> tmp.longitude;
-		stations.push_back(tmp);
+		std::getline(f, st->line_name, '\t');
+		std::getline(f, st->station_name, '\t');
+		f >> st->st;
+		f >> st->delay;
+		f >> st->latitude;
+		f >> st->longitude;
+		stations.push_back(st);
 	}
 	return stations;
 }
 
-std::vector<route> load_routes_from_file(char* path_routes)
+std::vector<std::shared_ptr<route>> load_routes_from_file(char* path_routes)
 {
-	std::vector<route> routes;
+	std::vector<std::shared_ptr<route>> routes;
 	std::ifstream f(std::string(path_routes), std::ios_base::in);
 	if (!f)
 		throw std::ios_base::failure(std::string("File didn't open"));
-	route tmp;
-	while (f >> tmp.index_dst)
+	unsigned short index_dst;
+	while (f >> index_dst)
 	{
-		//f >> tmp.index_dst;
-		f >> tmp.index_src;
-		f >> tmp.lt;
-		f >> tmp.time_transit;
-		routes.push_back(tmp);
+		auto rt = std::make_shared<route>();
+		rt->index_dst = index_dst;
+		f >> rt->index_src;
+		f >> rt->lt;
+		f >> rt->time_transit;
+		routes.push_back(rt);
 	}
 	return routes;
 }
