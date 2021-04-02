@@ -134,6 +134,11 @@ public:
 		{
 			return *it_edge;
 		}
+
+		link<TVertex, TEdge>* operator->()
+		{
+			return &*it_edge;
+		}
 	};
 
 	LinkIterator begin_link()
@@ -316,5 +321,49 @@ std::vector<char> dijkstra(graph<char, double>& g, char src, char dst)
 
 	return result;
 }
+
+//std::vector<char> bellman_ford(graph<char, double>& g, char src, char dst)
+//{
+//
+//	std::unordered_map<char, double> d;
+//	std::unordered_map<char, char> p;
+//
+//	const auto max =
+//		std::numeric_limits<double>::has_infinity
+//		? std::numeric_limits<double>::infinity()
+//		: std::numeric_limits<double>::max();
+//
+//
+//	for (const auto& v : g)
+//	{
+//		if (v != src)
+//			d[v] = max;
+//		else
+//			d[v] = 0;
+//	}
+//
+//	int x;
+//	const auto n = g.size();
+//	for (size_t i = 0; i < n; ++i)
+//	{
+//		for (auto j = g.begin_link(); j != g.end_link(); ++j)
+//		{
+//			x = -1;
+//			if (d[(*j).src] < max)
+//				if (d[(*j).dst] > d[(*j).src] + (*j).edge)
+//				{
+//					d[(*j).dst] = d[(*j).src] + (*j).edge;
+//					p[(*j).dst] = (*j).src;
+//					x = (*j).dst;
+//				}
+//		}
+//	}
+//	if (x != -1)
+//	{
+//		int y = x;
+//		for (int i = 0; i < n; ++i)
+//			y = p[y];
+//	}
+//}
 
 

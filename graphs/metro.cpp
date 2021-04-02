@@ -7,6 +7,51 @@
 #include <Windows.h>
 
 
+std::vector<std::shared_ptr<station>> bellman_ford(graph<std::shared_ptr<station>, std::shared_ptr<route>>& g, std::shared_ptr<station> src, std::shared_ptr<station> dst, std::vector<std::shared_ptr<station>>& stations, unsigned short& way)
+{
+	std::unordered_map<unsigned short, unsigned short> d;
+	std::unordered_map<unsigned short, unsigned short> p;
+
+	const auto max = route::max_time();
+	for (const auto& v : g)
+	{
+		if (v != src)
+			d[v->index] = max;
+		else
+			d[v->index] = 0;
+	}
+
+	const auto n = g.size();
+	for (size_t i = 0; i < n; ++i)
+	{
+		for (auto j = g.begin_link(); j != g.end_link(); ++j)
+		{
+			if(d[j->src->index]<max)
+				if (d[j->dst->index] > d[j->src->index] + j->edge->time_transit)
+				{
+					d[j->dst->index] = d[j->src->index] + j->edge->time_transit;
+					p[j->dst->index] = j->src->index;
+				}
+		}
+	}
+
+	std::vector<std::shared_ptr<station>> result;
+	result.push_back(dst);
+	auto tmp = p[dst->index];
+	result.push_back(stations[tmp]);
+	while (tmp != src->index)
+	{
+		tmp = p[tmp];
+		result.push_back(stations[tmp]);
+	}
+
+	std::reverse(result.begin(), result.end());
+
+	way = d[dst->index];
+
+	return result;
+}
+
 struct dijkstra_comparator
 {
 	std::unordered_map<unsigned short, unsigned short>& d;
@@ -166,5 +211,18 @@ void main(void)
 			std::cout << u8"Пересадка";*/
 		std::cout << std::endl;
 	}
+	std::cout << std::endl << std::endl;
 
+	res = bellman_ford(metro, stations[in_src], stations[in_dst], stations, way);
+
+	std::cout << u8"Путь займет: " << way / 60 << u8" минут" << std::endl;
+
+	for (auto i = res.begin(); i != res.end(); ++i)
+	{
+		std::cout << i->get()->station_name << "(" << i->get()->line_name << ")" << "->";
+
+		if (i + 1 != res.end() && i->get()->line_name != (i + 1)->get()->line_name)
+			std::cout << u8"Пересадка";
+		std::cout << std::endl;
+	}
 }
