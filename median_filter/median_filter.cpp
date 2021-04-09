@@ -95,17 +95,19 @@ std::vector<int> median_filter(const std::vector<int> src, size_t w = 3)
 
 void main(void)
 {
-	std::vector<int> v = { 2,2,56,3,4,2,4,5,123,14,1,2,3,4,1231,2,4,12,4 };
-	std::vector<int> mfv1 = simple_median_filter(v,5);
-	std::vector<int> mfv2 = median_filter(v, 5);
-	for (auto& i : mfv1)
+	std::vector<int> v;
+	for (auto i = 0; i < 20000000; ++i)
+		v.push_back(i);
+	std::vector<int> mfv1 = simple_median_filter(v,3);
+	//std::vector<int> mfv2 = median_filter(v, 3);
+	/*for (auto& i : mfv1)
 	{
 		std::cout << i << " ";
-	}
+	}*/
 	std::cout << std::endl;
-	std::cout << "  ";
+	/*std::cout << "  ";
 	for (auto& i : mfv2)
 	{
 		std::cout << i << " ";
-	}
+	}*/
 }

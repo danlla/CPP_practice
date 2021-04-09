@@ -203,12 +203,6 @@ void main(void)
 		
 		if(i+1!=res.end()&& i->get()->line_name != (i+1)->get()->line_name)
 			std::cout<< u8"Пересадка";
-
-		/*auto tmp = routes.begin();
-		while (i + 1 != res.end() && tmp->get()->index_src != i->get()->index &&  tmp->get()->index_dst != (i + 1)->get()->index)
-			++tmp;
-		if (tmp->get()->lt == link_type::CHANGE)
-			std::cout << u8"Пересадка";*/
 		std::cout << std::endl;
 	}
 	std::cout << std::endl << std::endl;
