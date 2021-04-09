@@ -15,5 +15,6 @@ add_subdirectory(median_filter)
 add_subdirectory(brut_force)
 add_subdirectory(collection)
 add_subdirectory(aquarium)
+add_subdirectory(qt-network)
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
